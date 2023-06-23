@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Collapsible sidebar using Bootstrap 4</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+        integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+        crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="content">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Quote of the Day</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarScroll">
+                        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                            style="--bs-scroll-height: 100px;">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="urlLink" href="settings.html">API URL:
+                                    https://foo.com/quotes</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+                <div class="card">
+                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                    <div class="card-body">
+                        <h5 class="card-title" id="quote">Set the API Server URL, above, and you will be able to
+                            retrieve random quotes.</h5>
+                        <p class="card-text" id="author"></p>
+                        <a href="#" class="btn btn-primary" onclick="getRandomQuote();">Get another random quote</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function () {
+            loadURL();
+        };
+        function loadURL() {
+            var url = localStorage.getItem("apiURL");
+            if (!url) {
+                url = 'Click here to set the API Server URL';
+            };
+            document.getElementById("urlLink").innerText = url;
+        };
+
+        function getRandomQuote() {
+            var url = localStorage.getItem("apiURL");
+            var request = new Request(url, {
+                method: 'GET',
+                headers: new Headers({
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'max-age=640000'
+                })
+            });
+            fetch(request)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    document.getElementById("quote").innerHTML = "Oops; the service could not be reached.";
+                    document.getElementById("author").innerHTML = "";
+                });
+        };
+    </script>
+</body>
+
+</html>
