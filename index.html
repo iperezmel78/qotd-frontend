@@ -94,8 +94,8 @@
                 })
                 .then((data) => {
                     let quote = data;
-                    document.getElementById("quote").innerHTML = `${quote.quotation}`;
-                    document.getElementById("author").innerHTML = `${quote.author}`;
+                    document.getElementById("quote").innerHTML = '"' + `${quote.quotation}` + '"';
+                    document.getElementById("author").innerHTML = '— ' + `${quote.author}`;
                 });
         }
     </script>
