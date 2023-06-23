@@ -87,17 +87,17 @@
                     'Cache-Control': 'max-age=640000'
                 })
             });
+
             fetch(request)
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
+                .then((response) => {
+                    return response.json();
                 })
-                .catch((error) => {
-                    console.log(error);
-                    document.getElementById("quote").innerHTML = "Oops; the service could not be reached.";
-                    document.getElementById("author").innerHTML = "";
+                .then((data) => {
+                    let quote = data;
+                    document.getElementById("quote").innerHTML = `${quote.quotation}`;
+                    document.getElementById("author").innerHTML = `${quote.author}`;
                 });
-        };
+        }
     </script>
 </body>
 
