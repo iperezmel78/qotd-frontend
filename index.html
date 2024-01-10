@@ -72,7 +72,8 @@
         function loadURL() {
             var url = localStorage.getItem("apiURL");
             if (!url) {
-                url = 'Click here to set the API Server URL';
+                url = '##QOTD_API_URL##';
+                localStorage.setItem("apiURL", url);
             };
             document.getElementById("urlLink").innerText = url;
         };
