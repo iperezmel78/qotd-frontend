@@ -1,4 +1,4 @@
-FROM docker.io/nginx
+FROM docker.io/library/nginx:1.23.2-alpine
 WORKDIR /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY *.* .
